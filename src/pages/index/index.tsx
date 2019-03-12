@@ -1,7 +1,7 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Input, Icon, Text } from '@tarojs/components'
 import './index.scss'
-import { isEmpty, get } from '../../utils'
+import { isEmpty, get, lowBalance } from '../../utils'
 
 interface State {
   cardNumber: string
@@ -133,7 +133,15 @@ export default class Index extends Component {
             </View>
             <View className='content-row'>
               <Text>深圳通余额</Text>
-              <Text>{this.state.cardInfo.card_balance}</Text>
+              <Text
+                className={
+                  lowBalance(this.state.cardInfo.card_balance)
+                    ? 'content-red'
+                    : ''
+                }
+              >
+                {this.state.cardInfo.card_balance}
+              </Text>
             </View>
             <View className='content-row'>
               <Text>更新时间</Text>
