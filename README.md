@@ -2,7 +2,8 @@
 深圳通余额查询小程序
 
 ![art](art.png)
-![小程序码](mini_qrcode.png)
+
+<img src="mini_qrcode.png" width="200" hegiht="200" align=center />
 
 ### 安装依赖
 
