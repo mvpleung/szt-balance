@@ -7,7 +7,11 @@
 
 ### 安装依赖
 
-	npm install
+  ```
+  npm install -g @tarojs/cli
+  
+  npm install
+  ```
 
 ### DEV环境运行
 
