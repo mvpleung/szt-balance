@@ -28,13 +28,7 @@ export default class Index extends Component {
     // this.setState({
     //   history: Taro.getStorageSync('history') || []
     // })
-    wxCloud({
-      name: 'queryHistory'
-    }).then(resp =>
-      this.setState({
-        history: resp.data
-      })
-    )
+    this.updateHistory()
   }
 
   componentWillMount() {}
@@ -52,6 +46,20 @@ export default class Index extends Component {
       title: '深圳通余额查询',
       path: '/index/index'
     }
+  }
+
+  /**
+   * 更新历史
+   * @param e
+   */
+  updateHistory(): void {
+    wxCloud({
+      name: 'queryHistory'
+    }).then(resp =>
+      this.setState({
+        history: resp.data
+      })
+    )
   }
 
   /**
@@ -92,16 +100,11 @@ export default class Index extends Component {
           cardNumber
         }
       }).then(resp => {
-        // let { history } = this.state
-        // history.push(resp.data.cardNumber)
-        // this.setState(
-        //   {
-        //     history: [...new Set(history)]
-        //   },
-        //   () => {
-        //     Taro.setStorage({ key: 'history', data: this.state.history })
-        //   }
-        // )
+        let { history } = this.state
+        history.push(resp.data.cardNumber)
+        this.setState({
+          history: [...new Set(history)]
+        })
         this.setState({
           cardInfo: resp.data
         })

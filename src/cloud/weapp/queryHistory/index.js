@@ -20,6 +20,6 @@ exports.main = async (event, context) => {
     .get()
   return {
     code: 1,
-    data: history.data.map(item => item.cardNumber)
+    data: [...new Set(history.data.map(item => item.cardNumber))]
   }
 }

@@ -34,11 +34,10 @@ exports.main = async (event, context) => {
 
   let result
   try {
-    result = await axios.post(
-      'http://query.shenzhentong.com:8080/sztnet/qryCard.do',
-      { cardno: cardNumber }
+    result = await axios.get(
+      `http://query.shenzhentong.com:8080/sztnet/qryCard.do?cardno=${cardNumber}`
     )
-    let _$ = cheerio.load(result)
+    let _$ = cheerio.load(result.data)
     //执行 html 查找转换
     let $table = _$('html').find('.tableact')
     if (!$table || $table.length === 0) {
@@ -73,7 +72,7 @@ exports.main = async (event, context) => {
     }
 
     //获取成功，存入数据库，用于历史显示
-    db.collection('szt-cardno').add({
+    await db.collection('szt-cardno').add({
       data: {
         openid: OPENID,
         appid: APPID,
