@@ -19,14 +19,48 @@ class App extends Component {
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
   config: WeAppConfig = {
-    pages: ['pages/index/index'],
+    pages: [
+      'pages/index/index',
+      'pages/history/index',
+      'pages/invoice/index',
+      'pages/mine/index'
+    ],
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
       navigationBarTitleText: 'WeChat',
       navigationBarTextStyle: 'black'
     },
-    cloud: true
+    cloud: true,
+    tabBar: {
+      list: [
+        {
+          pagePath: 'pages/index/index',
+          text: '查询',
+          iconPath: 'static/search.png',
+          selectedIconPath: 'static/search_red.png'
+        },
+        {
+          pagePath: 'pages/history/index',
+          text: '历史',
+          iconPath: 'static/history.png',
+          selectedIconPath: 'static/history_red.png'
+        },
+        {
+          pagePath: 'pages/invoice/index',
+          text: '发票',
+          iconPath: 'static/card.png',
+          selectedIconPath: 'static/card_red.png'
+        },
+
+        {
+          pagePath: 'pages/mine/index',
+          text: '我的',
+          iconPath: 'static/my.png',
+          selectedIconPath: 'static/my_red.png'
+        }
+      ]
+    }
   }
 
   componentDidMount() {
