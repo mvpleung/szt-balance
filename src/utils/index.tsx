@@ -1,4 +1,4 @@
-export { get } from './api'
+export * from './api'
 
 /**
  * 去除空格

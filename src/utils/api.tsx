@@ -1,4 +1,34 @@
 import Taro from '@tarojs/taro'
+import { ApiResult } from 'src/typings'
+
+const callback = (resolve, reject) => {
+  return {
+    success: res => {
+      let data = res.data || res.result
+      if (!data.code || data.code === 0) {
+        Taro.showToast({
+          title: data.message || '请求失败',
+          duration: 3000,
+          icon: 'none'
+        })
+        reject(data.message)
+        return
+      }
+      resolve(data)
+    },
+    fail: err => {
+      Taro.showToast({
+        title: err.message || '请求失败',
+        duration: 3000,
+        icon: 'none'
+      })
+      reject(err)
+    },
+    complete: () => {
+      Taro.hideLoading()
+    }
+  }
+}
 
 /**
  * Get 请求
@@ -10,7 +40,7 @@ export const get = (
   url: string,
   params?: any,
   config: any = {}
-): Promise<any> => {
+): Promise<ApiResult> => {
   Taro.showLoading({
     title: '请求中...',
     mask: true
@@ -20,30 +50,22 @@ export const get = (
   return new Promise((resolve, reject) => {
     Taro.request({
       ...config,
-      success: res => {
-        let { data } = res
-        if (!!data.code || data.code !== 0) {
-          Taro.showToast({
-            title: data.message || '请求失败',
-            duration: 3000,
-            icon: 'none'
-          })
-          reject(data.message)
-          return
-        }
-        resolve(data)
-      },
-      fail: err => {
-        Taro.showToast({
-          title: err.message || '请求失败',
-          duration: 3000,
-          icon: 'none'
-        })
-        reject(err)
-      },
-      complete: () => {
-        Taro.hideLoading()
-      }
+      ...callback(resolve, reject)
+    })
+  })
+}
+
+export const wxCloud = (
+  param: RQ<ICloud.CallFunctionParam>
+): Promise<ApiResult> => {
+  Taro.showLoading({
+    title: '请求中...',
+    mask: true
+  })
+  return new Promise((resolve, reject) => {
+    wx.cloud.callFunction({
+      ...param,
+      ...callback(resolve, reject)
     })
   })
 }

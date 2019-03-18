@@ -18,8 +18,6 @@ var _index3 = require("../../utils/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -40,7 +38,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Index.__proto__ || Object.getPrototypeOf(Index)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "cardNumber", "history", "cardInfo"], _this.config = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Index.__proto__ || Object.getPrototypeOf(Index)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["cardNumber", "history", "cardInfo"], _this.config = {
       navigationBarTitleText: '首页'
     }, _this.$$refs = [], _temp), _possibleConstructorReturn(_this, _ret);
   }
@@ -48,6 +46,8 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
   _createClass(Index, [{
     key: "_constructor",
     value: function _constructor() {
+      var _this2 = this;
+
       _get(Index.prototype.__proto__ || Object.getPrototypeOf(Index.prototype), "_constructor", this).call(this);
       /**
        * 指定config的类型声明为: Taro.Config
@@ -57,8 +57,15 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
        * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
        */
 
-      this.setState({
-        history: _index2.default.getStorageSync('history') || []
+      // this.setState({
+      //   history: Taro.getStorageSync('history') || []
+      // })
+      (0, _index3.wxCloud)({
+        name: 'queryHistory'
+      }).then(function (resp) {
+        return _this2.setState({
+          history: resp.data
+        });
       });
     }
   }, {
@@ -76,6 +83,14 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
   }, {
     key: "componentDidHide",
     value: function componentDidHide() {}
+  }, {
+    key: "onShareAppMessage",
+    value: function onShareAppMessage(object) {
+      return {
+        title: '深圳通余额查询',
+        path: '/index/index'
+      };
+    }
     /**
      * 更新卡号
      * @param e 事件
@@ -95,13 +110,13 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
   }, {
     key: "historySearch",
     value: function historySearch(cardNumber) {
-      var _this2 = this;
+      var _this3 = this;
 
       if (!(0, _index3.isEmpty)(cardNumber)) {
         this.setState({
           cardNumber: cardNumber
         }, function () {
-          _this2.search();
+          _this3.search();
         });
       }
     }
@@ -112,21 +127,28 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
   }, {
     key: "search",
     value: function search() {
-      var _this3 = this;
+      var _this4 = this;
 
       var cardNumber = this.state.cardNumber;
 
       if (!(0, _index3.isEmpty)(cardNumber)) {
-        (0, _index3.get)("https://api.apijs.cn/shenzhentong/" + cardNumber).then(function (resp) {
-          var history = _this3.state.history;
-
-          history.push(resp.data.card_number);
-          _this3.setState({
-            history: [].concat(_toConsumableArray(new Set(history)))
-          }, function () {
-            _index2.default.setStorage({ key: 'history', data: _this3.state.history });
-          });
-          _this3.setState({
+        (0, _index3.wxCloud)({
+          name: 'queryBalance',
+          data: {
+            cardNumber: cardNumber
+          }
+        }).then(function (resp) {
+          // let { history } = this.state
+          // history.push(resp.data.cardNumber)
+          // this.setState(
+          //   {
+          //     history: [...new Set(history)]
+          //   },
+          //   () => {
+          //     Taro.setStorage({ key: 'history', data: this.state.history })
+          //   }
+          // )
+          _this4.setState({
             cardInfo: resp.data
           });
         });
@@ -144,10 +166,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       this.__props = arguments[1] || this.props || {};
       var __runloopRef = arguments[2];
       ;
-      var anonymousState__temp = this.__state.cardInfo ? (0, _index3.lowBalance)(this.__state.cardInfo.card_balance) ? 'content-red' : '' : null;
-      Object.assign(this.__state, {
-        anonymousState__temp: anonymousState__temp
-      });
+      Object.assign(this.__state, {});
       return this.__state;
     }
   }]);

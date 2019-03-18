@@ -1,13 +1,13 @@
-import Taro, { Component, Config } from '@tarojs/taro'
+import Taro, {
+  Component,
+  Config,
+  ShareAppMessageObject,
+  ShareAppMessageReturn
+} from '@tarojs/taro'
 import { View, Input, Icon, Text } from '@tarojs/components'
 import './index.scss'
-import { isEmpty, get, lowBalance } from '../../utils'
-
-interface State {
-  cardNumber: string
-  cardInfo: any
-  history: Array<string>
-}
+import { isEmpty, wxCloud } from '../../utils'
+import { QueryInfo } from 'src/typings'
 
 export default class Index extends Component {
   /**
@@ -21,13 +21,20 @@ export default class Index extends Component {
     navigationBarTitleText: '首页'
   }
 
-  state: State
+  state: QueryInfo
 
   constructor() {
     super()
-    this.setState({
-      history: Taro.getStorageSync('history') || []
-    })
+    // this.setState({
+    //   history: Taro.getStorageSync('history') || []
+    // })
+    wxCloud({
+      name: 'queryHistory'
+    }).then(resp =>
+      this.setState({
+        history: resp.data
+      })
+    )
   }
 
   componentWillMount() {}
@@ -39,6 +46,13 @@ export default class Index extends Component {
   componentDidShow() {}
 
   componentDidHide() {}
+
+  onShareAppMessage(object: ShareAppMessageObject): ShareAppMessageReturn {
+    return {
+      title: '深圳通余额查询',
+      path: '/index/index'
+    }
+  }
 
   /**
    * 更新卡号
@@ -72,17 +86,22 @@ export default class Index extends Component {
   search(): void {
     let { cardNumber } = this.state
     if (!isEmpty(cardNumber)) {
-      get(`https://api.apijs.cn/shenzhentong/${cardNumber}`).then(resp => {
-        let { history } = this.state
-        history.push(resp.data.card_number)
-        this.setState(
-          {
-            history: [...new Set(history)]
-          },
-          () => {
-            Taro.setStorage({ key: 'history', data: this.state.history })
-          }
-        )
+      wxCloud({
+        name: 'queryBalance',
+        data: {
+          cardNumber
+        }
+      }).then(resp => {
+        // let { history } = this.state
+        // history.push(resp.data.cardNumber)
+        // this.setState(
+        //   {
+        //     history: [...new Set(history)]
+        //   },
+        //   () => {
+        //     Taro.setStorage({ key: 'history', data: this.state.history })
+        //   }
+        // )
         this.setState({
           cardInfo: resp.data
         })
@@ -129,31 +148,29 @@ export default class Index extends Component {
           <View className='content-info'>
             <View className='content-row'>
               <Text>深圳通卡号</Text>
-              <Text>{this.state.cardInfo.card_number}</Text>
+              <Text>{this.state.cardInfo.cardNumber}</Text>
             </View>
             <View className='content-row'>
               <Text>深圳通余额</Text>
               <Text
                 className={
-                  lowBalance(this.state.cardInfo.card_balance)
-                    ? 'content-red'
-                    : ''
+                  this.state.cardInfo.cardBalance <= 1 ? 'content-red' : ''
                 }
               >
-                {this.state.cardInfo.card_balance}
+                {this.state.cardInfo.cardBalance}元
               </Text>
             </View>
             <View className='content-row'>
               <Text>更新时间</Text>
-              <Text>{this.state.cardInfo.balance_time}</Text>
+              <Text>{this.state.cardInfo.updateTime}</Text>
             </View>
             <View className='content-row'>
               <Text>卡片有效期</Text>
-              <Text>{this.state.cardInfo.card_validity}</Text>
+              <Text>{this.state.cardInfo.cardValidity}</Text>
             </View>
             <View className='content-row'>
               <Text>查询时间</Text>
-              <Text>{this.state.cardInfo.current_time}</Text>
+              <Text>{this.state.cardInfo.currentTime}</Text>
             </View>
           </View>
         )}

@@ -45,14 +45,20 @@ var _App = function (_BaseComponent) {
         navigationBarBackgroundColor: '#fff',
         navigationBarTitleText: 'WeChat',
         navigationBarTextStyle: 'black'
-      }
+      },
+      cloud: true
     };
     return _this;
   }
 
   _createClass(_App, [{
     key: 'componentDidMount',
-    value: function componentDidMount() {}
+    value: function componentDidMount() {
+      wx.cloud.init({
+        env: 'szt-balance-ac8d11',
+        traceUser: true
+      });
+    }
   }, {
     key: 'componentDidShow',
     value: function componentDidShow() {}

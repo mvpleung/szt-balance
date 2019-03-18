@@ -12,5 +12,6 @@
     "autoAudits": false
   },
   "compileType": "miniprogram",
+  "cloudfunctionRoot": "src/cloud/weapp/",
   "condition": {}
 }

@@ -6,11 +6,14 @@ Object.defineProperty(exports, "__esModule", {
 
 var _api = require('./api.js');
 
-Object.defineProperty(exports, 'get', {
-  enumerable: true,
-  get: function get() {
-    return _api.get;
-  }
+Object.keys(_api).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _api[key];
+    }
+  });
 });
 
 /**
