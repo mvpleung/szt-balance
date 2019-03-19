@@ -18,5 +18,32 @@
 		"beforePreview": "",
 		"beforeUpload": "npm run build:weapp"
 	},
-	"condition": {}
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"list": []
+		},
+		"miniprogram": {
+			"current": 0,
+			"list": [
+				{
+					"id": -1,
+					"name": "模拟更新编译",
+					"pathName": "pages/index/index",
+					"scene": 1011
+				}
+			]
+		}
+	}
 }

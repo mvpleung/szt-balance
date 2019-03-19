@@ -77,5 +77,11 @@ exports.main = async (event, context) => {
           .get().data
       })
   }
+  result.code === 1 &&
+    (!result.data || !result.data.cardNumber) &&
+    (result = {
+      code: 0,
+      message: '未查询到记录，请重试'
+    })
   return result
 }
