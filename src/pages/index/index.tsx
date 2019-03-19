@@ -4,10 +4,11 @@ import Taro, {
   ShareAppMessageObject,
   ShareAppMessageReturn
 } from '@tarojs/taro'
-import { View, Input, Icon, Text } from '@tarojs/components'
+import { View, Input, Icon, Text, Image } from '@tarojs/components'
 import './index.scss'
 import { isEmpty, wxCloud } from '../../utils'
 import { QueryInfo } from 'src/typings'
+import CardLogo from './../../static/logo.png'
 
 export default class Index extends Component {
   /**
@@ -149,31 +150,41 @@ export default class Index extends Component {
         </View>
         {this.state.cardInfo && (
           <View className='content-info'>
-            <View className='content-row'>
-              <Text>深圳通卡号</Text>
-              <Text>{this.state.cardInfo.cardNumber}</Text>
+            <View className='content-logo'>
+              <Image src={CardLogo} />
             </View>
-            <View className='content-row'>
-              <Text>深圳通余额</Text>
-              <Text
-                className={
-                  this.state.cardInfo.cardBalance <= 1 ? 'content-red' : ''
-                }
-              >
-                {this.state.cardInfo.cardBalance}元
-              </Text>
+            <View className='content-datas'>
+              <View className='content-row'>
+                <Text>卡号</Text>
+                <Text>{this.state.cardInfo.cardNumber}</Text>
+              </View>
+              <View className='content-row'>
+                <Text>余额</Text>
+                <Text
+                  className={
+                    this.state.cardInfo.cardBalance <= 1 ? 'content-red' : ''
+                  }
+                >
+                  {this.state.cardInfo.cardBalance}元
+                </Text>
+              </View>
+              <View className='content-row'>
+                <Text>有效期</Text>
+                <Text>{this.state.cardInfo.cardValidity}</Text>
+              </View>
+              <View className='content-row'>
+                <Text>更新时间</Text>
+                <Text>{this.state.cardInfo.updateTime}</Text>
+              </View>
+
+              <View className='content-row'>
+                <Text>查询时间</Text>
+                <Text>{this.state.cardInfo.currentTime}</Text>
+              </View>
             </View>
-            <View className='content-row'>
-              <Text>更新时间</Text>
-              <Text>{this.state.cardInfo.updateTime}</Text>
-            </View>
-            <View className='content-row'>
-              <Text>卡片有效期</Text>
-              <Text>{this.state.cardInfo.cardValidity}</Text>
-            </View>
-            <View className='content-row'>
-              <Text>查询时间</Text>
-              <Text>{this.state.cardInfo.currentTime}</Text>
+
+            <View className='content-instruction'>
+              <Text>深圳通--交通的小管家</Text>
             </View>
           </View>
         )}
