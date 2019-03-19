@@ -1,4 +1,6 @@
-// 云函数入口文件
+/**
+ * 查询账号历史查询记录
+ */
 const cloud = require('wx-server-sdk')
 
 cloud.init()

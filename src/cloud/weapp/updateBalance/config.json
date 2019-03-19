@@ -1,0 +1,9 @@
+{
+  "triggers": [
+    {
+      "name": "autoUpdateBalance",
+      "type": "timer",
+      "config": "0 0 1,3,7,10,14,16 * * * *"
+    }
+  ]
+}

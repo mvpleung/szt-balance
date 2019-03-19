@@ -1,4 +1,6 @@
-// 云函数入口文件
+/**
+ * 查询公交卡余额
+ */
 const cloud = require('wx-server-sdk')
 const { get } = require('./utils')
 
