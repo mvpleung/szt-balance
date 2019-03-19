@@ -177,6 +177,11 @@ export default class Index extends Component {
             </View>
           </View>
         )}
+        <View className='content-row-notice'>
+          <Text className='noticeTxt'>
+            注：本查询结果均来自于官方最近更新的数据，偶有查询失败，请尝试再次查询
+          </Text>
+        </View>
       </View>
     )
   }
