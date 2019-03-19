@@ -31,16 +31,16 @@ exports.main = async (event, context) => {
   let result = await get(cardNumber)
 
   let collection = db.collection('szt-balance')
-  let count = await collection
+  let { total } = await collection
     .where({
       openid: OPENID,
       appid: APPID,
       cardNumber
     })
-    .count().total
+    .count()
 
   //数据库没有数据，插入获取到的数据
-  if (!count) {
+  if (total <= 0) {
     //仅当接口返回数据时再插入
     result.code === 1 &&
       (await collection.add({
