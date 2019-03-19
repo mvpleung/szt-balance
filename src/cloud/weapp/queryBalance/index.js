@@ -4,9 +4,7 @@ const { get } = require('./utils')
 
 cloud.init()
 
-const db = cloud.database({
-  env: 'szt-balance-ac8d11'
-})
+const db = cloud.database()
 
 // 云函数入口函数
 exports.main = async (event, context) => {

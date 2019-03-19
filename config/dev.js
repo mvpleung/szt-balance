@@ -1,9 +1,9 @@
 module.exports = {
   env: {
-    NODE_ENV: '"development"'
+    NODE_ENV: '"development"',
+    CLOUE_ENV: 'szt-balance-ac8d11'
   },
-  defineConstants: {
-  },
+  defineConstants: {},
   weapp: {},
   h5: {}
 }

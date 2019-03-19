@@ -65,7 +65,7 @@ class App extends Component {
 
   componentDidMount() {
     wx.cloud.init({
-      env: 'szt-balance-ac8d11',
+      env: process.env.CLOUE_ENV,
       traceUser: true
     })
   }

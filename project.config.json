@@ -13,5 +13,10 @@
 	},
 	"compileType": "miniprogram",
 	"cloudfunctionRoot": "src/cloud/weapp/",
+	"scripts": {
+		"beforeCompile": "",
+		"beforePreview": "",
+		"beforeUpload": "npm run build:weapp"
+	},
 	"condition": {}
 }
