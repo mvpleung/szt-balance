@@ -93,7 +93,7 @@ exports.get = async cardNumber => {
             .replace('&#x52A;', '')
         ),
         cardValidity: _$($td[2]).html(),
-        currentTime: formatDate(Date.now()),
+        currentTime: exports.formatDate(Date.now()),
         updateTime:
           $table
             .find('#cardRealAmt')
