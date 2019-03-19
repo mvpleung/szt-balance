@@ -47,14 +47,13 @@ export default class Nav extends Component {
     // 获取用户信息
     wx.getSetting({
       success(res) {
-        console.log(99999, res.authSetting['scope.record'])
         if (!res.authSetting['scope.record']) {
           wx.authorize({
             scope: 'scope.record',
             success() {
               // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
               // wx.startRecord()
-              console.log(5555)
+              console.log('授权完成')
             }
           })
         } else {
@@ -65,7 +64,7 @@ export default class Nav extends Component {
               _this.setState({
                 userInfo: res.userInfo
               })
-              console.log(999, res)
+              console.log('成功获取用户信息', res)
               // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
               // 所以此处加入 callback 以防止这种情况
               // if (this.userInfoReadyCallback) {
@@ -81,23 +80,15 @@ export default class Nav extends Component {
   render() {
     return (
       <View className='mine viewBox'>
-        <Image
-          style='width: 300px;height: 100px;background: #fff;'
-          src={this.state.userInfo.avatarUrl}
-          mode='scaleToFill'
-          open-data='getUserInfo'
-        />
+        <View className='picMine'>
+          <Image
+            src={this.state.userInfo.avatarUrl}
+            mode='scaleToFill'
+            open-data='getUserInfo'
+          />
+        </View>
+
         <Text>{this.state.userInfo.nickName}</Text>
-        <Icon
-          className='icon'
-          type='search'
-          color='#409EFF'
-          size='20'
-          onClick={this.getUserDatas}
-        />
-        {/* <open-data type='groupName' open-gid='xxxxxx' />
-        <open-data type='userAvatarUrl' />
-        <open-data type='userGender' lang='zh_CN' /> */}
       </View>
     )
   }
