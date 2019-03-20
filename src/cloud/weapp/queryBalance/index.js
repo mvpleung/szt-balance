@@ -65,23 +65,23 @@ exports.main = async (event, context) => {
           }
         }))
     //接口没有返回数据时，查询数据库记录
-    result.code === 0 &&
-      (result = {
-        code: 1,
-        data: await collection
-          .where({
-            openid: OPENID,
-            appid: APPID,
-            cardNumber
-          })
-          .get().data
-      })
+    if (result.code === 0) {
+      let {
+        data: [item]
+      } = await collection
+        .where({
+          openid: OPENID,
+          appid: APPID,
+          cardNumber
+        })
+        .get()
+      item &&
+        item.cardNumber &&
+        (result = {
+          code: 1,
+          data: item
+        })
+    }
   }
-  result.code === 1 &&
-    (!result.data || !result.data.cardNumber) &&
-    (result = {
-      code: 0,
-      message: '未查询到记录，请重试'
-    })
   return result
 }
