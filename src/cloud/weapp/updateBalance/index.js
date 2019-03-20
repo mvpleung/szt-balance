@@ -16,17 +16,19 @@ exports.main = async (event, context) => {
   //数据存在数据时，自动调用
   if (list.length > 0) {
     list.forEach(async item => {
-      let result = await get(item.cardNumber)
-      result.code === 1 &&
-        (await collection
-          .where({
-            openid: item.openid,
-            appid: item.appid,
-            cardNumber: item.cardNumber
-          })
-          .update({
-            data: { ...item, ...result.data }
-          }))
+      let {
+        code,
+        data: { cardBalance, cardValidity, currentTime, updateTime }
+      } = await get(item.cardNumber)
+      code === 1 &&
+        (await collection.doc(item._id).update({
+          data: {
+            cardBalance,
+            cardValidity,
+            currentTime,
+            updateTime
+          }
+        }))
     })
   }
 
