@@ -43,10 +43,10 @@ export default class Index extends Component {
 
   componentDidHide() {}
 
-  onShareAppMessage(object: ShareAppMessageObject): ShareAppMessageReturn {
+  onShareAppMessage(_object: ShareAppMessageObject): ShareAppMessageReturn {
     return {
       title: '深圳通余额查询',
-      path: '/index/index'
+      path: '/pages/index/index'
     }
   }
 
@@ -152,29 +152,28 @@ export default class Index extends Component {
         {this.state.cardInfo && (
           <View className='content-info'>
             <View className='content-datas'>
-              <View className='content-logo content-row'>
+              <View className='content-row'>
                 <Image src={CardLogo} />
-                <Text>{this.state.cardInfo.cardNumber}</Text>
               </View>
-              <View className='content-row balance flex-right'>
+              <View className='content-row'>
                 <Text
                   className={
                     this.state.cardInfo.cardBalance <= 1 ? 'content-red' : ''
                   }
                 >
-                  {this.state.cardInfo.cardBalance}元
+                  {this.state.cardInfo.cardBalance}
                 </Text>
+                <Text>元</Text>
               </View>
-              <View className='content-row updateTime flex-right'>
-                <Text>截止：{this.state.cardInfo.updateTime}</Text>
+              <View className='content-row'>
+                <Text>截止到 {this.state.cardInfo.updateTime}</Text>
               </View>
-              <View className='content-row cardValidity flex-right'>
+              <View className='content-row'>
                 <Text>
-                  有效期：
-                  {this.state.cardInfo.cardValidity
-                    ? this.state.cardInfo.cardValidity
-                    : '暂无数据'}
+                  {this.state.cardInfo.cardValidity &&
+                    `有效期：${this.state.cardInfo.cardValidity}`}
                 </Text>
+                <Text>{this.state.cardInfo.cardNumber}</Text>
               </View>
             </View>
           </View>

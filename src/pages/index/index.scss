@@ -56,59 +56,61 @@
     .content-datas {
       height: 380px;
       width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
       .content-row {
-        width: 90%;
         padding: 0 20px;
         color: white;
-        font-size: 75%;
-        display: inline-flex;
-        justify-content: space-between;
+        &:first-child,
+        &:last-child {
+          display: inline-flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+        &:first-child {
+          image {
+            width: 180px;
+            height: 90px;
+            padding: 5px 0 0 10px;
+          }
+          text {
+            font-size: 75%;
+            opacity: 0.85;
+          }
+        }
+        &:not(:last-child),
+        &:not(:first-child) {
+          flex: 1;
+        }
+        &:nth-child(2) {
+          text:first-child {
+            font-size: 280%;
+          }
+        }
+        &:nth-child(3) {
+          text-align: right;
+          text {
+            font-size: 75%;
+            opacity: 0.85;
+          }
+        }
+        &:last-child {
+          text:first-child {
+            font-size: 75%;
+            opacity: 0.85;
+          }
+          text:last-child {
+            color: #d8be30;
+          }
+        }
         .content-red {
-          color: #d52b2b;
+          color: #c20082;
         }
         // text:nth-child(2) {
         //   flex: 1;
         //   text-align: right;
         // }
-      }
-      .content-logo {
-        justify-content: center;
-        align-items: center;
-        image {
-          width: 180px;
-          height: 90px;
-          padding: 5px 0 0 10px;
-        }
-        text {
-          flex: 1;
-          text-align: right;
-          font-size: 160%;
-        }
-      }
-      .flex-right {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: flex-end;
-      }
-      .balance {
-        text {
-          font-size: 280%;
-        }
-      }
-      .updateTime {
-        padding-top: 10px;
-        text {
-          font-size: 75%;
-          opacity: 0.6;
-        }
-      }
-      .cardValidity {
-        padding-top: 95px;
-        text {
-          font-size: 75%;
-          opacity: 0.6;
-        }
       }
     }
   }
