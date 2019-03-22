@@ -19,7 +19,14 @@
     "jsxFactory": "Taro.createElement",
     "allowJs": true,
     "resolveJsonModule": true,
-    "typeRoots": ["node_modules/@types", "global.d.ts", "src/typings"]
+    "typeRoots": ["node_modules/@types", "global.d.ts", "src/typings"],
+    "paths": {
+      "@/components/*": ["./src/components/*"],
+      "@/utils": ["./src/utils/index"],
+      "@/static/*": ["./src/static/*"],
+      "@/typings": ["./src/typings/index"],
+      "@/pages/*": ["./src/pages/*"]
+    }
   },
   "exclude": ["node_modules", "dist"],
   "compileOnSave": false

@@ -2,14 +2,14 @@ import Taro, {
   Component,
   Config,
   ShareAppMessageObject,
-  ShareAppMessageReturn,
-  openDocument
+  ShareAppMessageReturn
 } from '@tarojs/taro'
-import { View, Input, Icon, Text, Image, Canvas } from '@tarojs/components'
+import { View, Input, Icon, Text } from '@tarojs/components'
+import SwipperCard from '@/components/card/SwipperCard'
 import './index.scss'
-import { isEmpty, wxCloud } from '../../utils'
-import { QueryInfo } from 'src/typings'
-import CardLogo from './../../static/logo.png'
+import { isEmpty, wxCloud } from '@/utils'
+import { QueryInfo } from '@/typings'
+import { BaseEventOrig } from '@tarojs/components/types/common'
 
 export default class Index extends Component {
   /**
@@ -20,16 +20,14 @@ export default class Index extends Component {
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
   config: Config = {
-    navigationBarTitleText: '首页'
+    navigationBarTitleText: '查询深圳通余额',
+    enablePullDownRefresh: true
   }
 
   state: QueryInfo
 
   constructor() {
     super()
-    // this.setState({
-    //   history: Taro.getStorageSync('history') || []
-    // })
     this.updateHistory()
   }
 
@@ -54,40 +52,30 @@ export default class Index extends Component {
    * 更新历史
    * @param e
    */
-  updateHistory(): void {
-    wxCloud({
-      name: 'queryHistory'
-    }).then(resp =>
-      this.setState({
-        history: resp.data
-      })
+  updateHistory(complete?: Function, isPullDown?: boolean): void {
+    wxCloud(
+      {
+        name: 'queryRecords'
+      },
+      !isPullDown
     )
+      .then(resp => {
+        this.setState({
+          records: resp.data
+        })
+        complete && complete()
+      })
+      .catch(error => complete && complete(error))
   }
 
   /**
    * 更新卡号
    * @param e 事件
    */
-  inputChange(e): void {
+  inputChange(e: BaseEventOrig<any>): void {
     this.setState({
-      cardNumber: e.target.value
+      cardNumber: e.detail.value
     })
-  }
-
-  /**
-   * 历史搜索
-   */
-  historySearch(cardNumber: string): void {
-    if (!isEmpty(cardNumber)) {
-      this.setState(
-        {
-          cardNumber
-        },
-        () => {
-          this.search()
-        }
-      )
-    }
   }
 
   /**
@@ -102,13 +90,8 @@ export default class Index extends Component {
           cardNumber
         }
       }).then(resp => {
-        let { history } = this.state
-        history.push(resp.data.cardNumber)
         this.setState({
-          history: [...new Set(history)]
-        })
-        this.setState({
-          cardInfo: resp.data
+          records: [resp.data].concat(this.state.records)
         })
       })
     } else {
@@ -117,6 +100,24 @@ export default class Index extends Component {
         icon: 'none'
       })
     }
+  }
+
+  /**
+   * 监听用户下拉刷新
+   */
+  onPullDownRefresh(): void {
+    this.updateHistory(() => Taro.stopPullDownRefresh(), true)
+  }
+
+  /**
+   * 卡片删除成功回调
+   * @param cardNumber 卡号
+   */
+  onCardDelete(cardNumber: string): void {
+    let records = this.state.records
+    this.setState({
+      records: records.filter(record => record.cardNumber != cardNumber)
+    })
   }
 
   render() {
@@ -138,46 +139,11 @@ export default class Index extends Component {
             onClick={this.search}
           />
         </View>
-        <View className='history'>
-          {this.state.history.map(item => (
-            <Text
-              key={item}
-              className='history-item'
-              onClick={this.historySearch.bind(this, item)}
-            >
-              {item}
-            </Text>
-          ))}
-        </View>
-        {this.state.cardInfo && (
-          <View className='content-info'>
-            <View className='content-datas'>
-              <View className='content-row'>
-                <Image src={CardLogo} />
-              </View>
-              <View className='content-row'>
-                <Text
-                  className={
-                    this.state.cardInfo.cardBalance <= 1 ? 'content-red' : ''
-                  }
-                >
-                  {this.state.cardInfo.cardBalance}
-                </Text>
-                <Text>元</Text>
-              </View>
-              <View className='content-row'>
-                <Text>截止到 {this.state.cardInfo.updateTime}</Text>
-              </View>
-              <View className='content-row'>
-                <Text>
-                  {this.state.cardInfo.cardValidity &&
-                    `有效期：${this.state.cardInfo.cardValidity}`}
-                </Text>
-                <Text>{this.state.cardInfo.cardNumber}</Text>
-              </View>
-            </View>
-          </View>
-        )}
+        <SwipperCard
+          records={this.state.records}
+          styleObj={{ marginTop: '60rpx' }}
+          onDelete={this.onCardDelete}
+        />
         <View className='content-row-notice'>
           <Text className='noticeTxt'>
             注：本查询结果均来自于官方最近更新的数据，偶有查询失败，请尝试再次查询

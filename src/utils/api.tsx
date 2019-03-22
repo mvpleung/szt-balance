@@ -56,12 +56,14 @@ export const get = (
 }
 
 export const wxCloud = (
-  param: RQ<ICloud.CallFunctionParam>
+  param: RQ<ICloud.CallFunctionParam>,
+  showLoading: boolean = true
 ): Promise<ApiResult> => {
-  Taro.showLoading({
-    title: '请求中...',
-    mask: true
-  })
+  showLoading &&
+    Taro.showLoading({
+      title: '请求中...',
+      mask: true
+    })
   return new Promise((resolve, reject) => {
     wx.cloud.callFunction({
       ...param,

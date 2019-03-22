@@ -41,6 +41,10 @@ declare namespace Szt {
      * 查询历史
      */
     history: Array<string>
+    /**
+     * 查询记录
+     */
+    records: Array<CardInfo>
   }
 
   /**
@@ -66,6 +70,6 @@ declare namespace Szt {
     /**
      * 查询时间
      */
-    currentTime: string
+    currentTime?: string
   }
 }

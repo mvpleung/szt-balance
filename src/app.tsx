@@ -26,9 +26,8 @@ class App extends Component {
       // 'pages/mine/index'
     ],
     window: {
-      backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
-      navigationBarTitleText: 'WeChat',
+      navigationBarTitleText: '首页',
       navigationBarTextStyle: 'black'
     },
     cloud: true
