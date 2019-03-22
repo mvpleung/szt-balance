@@ -1,7 +1,7 @@
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
 const axios = require('axios')
-const { formatDate } = require('./utils')
+const { formatDate } = require('../utils')
 
 cloud.init()
 

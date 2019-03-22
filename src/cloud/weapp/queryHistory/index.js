@@ -1,18 +1,13 @@
 /**
  * 查询账号历史查询记录
  */
-const cloud = require('wx-server-sdk')
-
-cloud.init()
-
-const db = cloud.database()
+const { initCloud } = require('./utils')
 
 // 云函数入口函数
-exports.main = async (event, context) => {
-  const { OPENID, APPID } = cloud.getWXContext()
+exports.main = async ({ env }, context) => {
+  let { collection, OPENID, APPID } = await initCloud(env)
 
-  // let history = await db
-  //   .collection('szt-cardno')
+  // let history = await collection
   //   .where({
   //     openid: OPENID,
   //     appid: APPID
@@ -23,8 +18,7 @@ exports.main = async (event, context) => {
   //   data: [...new Set(history.data.map(item => item.cardNumber))]
   // }
 
-  let history = await db
-    .collection('szt-balance')
+  let history = await collection
     .where({
       openid: OPENID,
       appid: APPID

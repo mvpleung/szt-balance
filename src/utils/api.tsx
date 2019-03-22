@@ -64,6 +64,11 @@ export const wxCloud = (
       title: '请求中...',
       mask: true
     })
+  if (!param.data) {
+    param.data = { env: process.env.CLOUE_ENV }
+  } else {
+    param.data.env = process.env.CLOUE_ENV
+  }
   return new Promise((resolve, reject) => {
     wx.cloud.callFunction({
       ...param,

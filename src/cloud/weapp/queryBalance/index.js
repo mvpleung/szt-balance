@@ -1,19 +1,11 @@
 /**
  * 查询公交卡余额
  */
-const cloud = require('wx-server-sdk')
-const { get } = require('./utils')
-
-cloud.init()
-
-const db = cloud.database()
+const { get, initCloud } = require('./utils')
 
 // 云函数入口函数
-exports.main = async (event, context) => {
-  let { cardNumber } = event
-  const { OPENID, APPID } = cloud.getWXContext()
-
-  cardNumber = String(cardNumber)
+exports.main = async ({ cardNumber, env }, context) => {
+  let { collection, OPENID, APPID } = await initCloud(env)
 
   if (!cardNumber) {
     return {
@@ -30,7 +22,6 @@ exports.main = async (event, context) => {
 
   let result = await get(cardNumber)
 
-  let collection = db.collection('szt-balance')
   let { total } = await collection
     .where({
       openid: OPENID,

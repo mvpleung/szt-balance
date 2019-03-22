@@ -1,19 +1,22 @@
 /**
  * 删除微信openid所属历史记录
  */
-const cloud = require('wx-server-sdk')
-
-cloud.init()
-
-const db = cloud.database()
+const { initCloud } = require('./utils')
 
 // 云函数入口函数
-exports.main = async (event, context) => {
-  let { cardNumber } = event
-  const { OPENID, APPID } = cloud.getWXContext()
+exports.main = async ({ cardNumber, env }, context) => {
+  let { collection, OPENID, APPID } = await initCloud(env)
 
-  let { stats: { removed } } = await db
-    .collection('szt-balance')
+  if (!cardNumber) {
+    return {
+      code: 0,
+      message: '卡号不能为空'
+    }
+  }
+
+  let {
+    stats: { removed }
+  } = await collection
     .where({
       openid: OPENID,
       appid: APPID,

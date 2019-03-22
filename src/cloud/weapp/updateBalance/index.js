@@ -1,16 +1,11 @@
 /**
  * 定时器，自动更新数据库账号余额
  */
-const cloud = require('wx-server-sdk')
-const { get } = require('./utils')
-
-cloud.init()
-
-const db = cloud.database()
+const { get, initCloud } = require('./utils')
 
 // 云函数入口函数
-exports.main = async (event, context) => {
-  let collection = db.collection('szt-balance')
+exports.main = async ({ env }, context) => {
+  let { collection } = await initCloud(env)
   let { data: list } = await collection.get()
 
   //数据存在数据时，自动调用

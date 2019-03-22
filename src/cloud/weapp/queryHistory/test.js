@@ -1,3 +1,3 @@
-let queryHistory = require('./index')
+let test = require('./index')
 
-queryHistory.main(null).then(resp => console.dir(resp))
+test.main(null).then(resp => console.dir(resp))

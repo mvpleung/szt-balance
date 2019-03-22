@@ -1,6 +1,6 @@
-let queryBalance = require('./index')
+let test = require('./index')
 
-queryBalance
+test
   .main(
     {
       cardNumber: '684477097'
