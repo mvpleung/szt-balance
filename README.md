@@ -1,12 +1,14 @@
 # szt-balance
 
-深圳通余额查询小程序
+深圳通余额查询小程序，使用 Tarojs + TypeScript + React语法
 
-![art](art.jpg)
+<img src="art.jpg" width="300" hegiht="300" align=center />
 
 <img src="mini_qrcode.png" width="200" hegiht="200" align=center />
 
 ## 安装依赖
+
+> 依赖 [tarojs](https://taro.aotu.io/)
 
 ```js
 npm install -g @tarojs/cli
