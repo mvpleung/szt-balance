@@ -4,11 +4,11 @@ import { ApiResult } from 'src/typings'
 const callback = (resolve, reject) => {
   return {
     success: res => {
+      Taro.hideLoading()
       let data = res.data || res.result
       if (!data.code || data.code === 0) {
         Taro.showToast({
           title: data.message || '请求失败',
-          duration: 3000,
           icon: 'none'
         })
         reject(data.message)
@@ -17,16 +17,14 @@ const callback = (resolve, reject) => {
       resolve(data)
     },
     fail: err => {
+      Taro.hideLoading()
       Taro.showToast({
         title: err.message || '请求失败',
-        duration: 3000,
         icon: 'none'
       })
       reject(err)
     },
-    complete: () => {
-      Taro.hideLoading()
-    }
+    complete: () => {}
   }
 }
 

@@ -5,7 +5,7 @@ import Taro, {
   ShareAppMessageReturn
 } from '@tarojs/taro'
 import { View, Input, Icon, Text } from '@tarojs/components'
-import SwipperCard from '@/components/card/SwipperCard'
+import SwiperCard from '@/components/card/SwiperCard'
 import './index.scss'
 import { isEmpty, wxCloud } from '@/utils'
 import { QueryInfo } from '@/typings'
@@ -144,9 +144,9 @@ export default class Index extends Component {
             onClick={this.search}
           />
         </View>
-        <SwipperCard
+        <SwiperCard
           records={this.state.records}
-          styleObj={{ marginTop: '60rpx' }}
+          // styleObj={{ marginTop: '60rpx' }}
           onDelete={this.onCardDelete}
         />
         <View className='content-row-notice'>
