@@ -16,6 +16,7 @@
     .content-row {
       padding: 0 20px;
       color: white;
+      flex: 1;
       &:first-child,
       &:last-child {
         display: inline-flex;
@@ -37,10 +38,10 @@
           opacity: 0.85;
         }
       }
-      &:not(:last-child),
-      &:not(:first-child) {
-        flex: 1;
-      }
+      // &:not(:last-child),
+      // &:not(:first-child) {
+      //   flex: 1;
+      // }
       &:nth-child(2) {
         text:first-child {
           font-size: 280%;
@@ -54,6 +55,7 @@
         }
       }
       &:last-child {
+        flex: 0.5;
         text:first-child {
           font-size: 75%;
           opacity: 0.85;
