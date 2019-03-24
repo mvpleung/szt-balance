@@ -1,12 +1,9 @@
 /**
  * 删除微信openid所属历史记录
  */
-const { initCloud } = require('./utils')
 
 // 云函数入口函数
-exports.main = async ({ cardNumber, env }, context) => {
-  let { collection, OPENID, APPID } = await initCloud(env)
-
+exports.main = async ({ cardNumber, collection, OPENID, APPID }, context) => {
   if (!cardNumber) {
     return {
       code: 0,

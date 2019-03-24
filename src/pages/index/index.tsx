@@ -90,8 +90,13 @@ export default class Index extends Component {
           cardNumber
         }
       }).then(resp => {
+        let cardInfo = resp.data
         this.setState({
-          records: [resp.data].concat(this.state.records)
+          records: [cardInfo].concat(
+            this.state.records.filter(
+              record => record.cardNumber !== cardInfo.cardNumber
+            )
+          )
         })
       })
     } else {

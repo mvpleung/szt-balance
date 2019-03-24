@@ -1,12 +1,10 @@
 /**
  * 查询公交卡余额
  */
-const { get, initCloud } = require('./utils')
+const { getSzt } = require('../utils')
 
 // 云函数入口函数
-exports.main = async ({ cardNumber, env }, context) => {
-  let { collection, OPENID, APPID } = await initCloud(env)
-
+exports.main = async ({ cardNumber, collection, OPENID, APPID }, context) => {
   if (!cardNumber) {
     return {
       code: 0,
@@ -20,7 +18,7 @@ exports.main = async ({ cardNumber, env }, context) => {
     }
   }
 
-  let result = await get(cardNumber)
+  let result = await getSzt(cardNumber)
 
   let { total } = await collection
     .where({

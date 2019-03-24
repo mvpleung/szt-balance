@@ -55,9 +55,16 @@ export const get = (
   })
 }
 
+/**
+ * 微信云函数调用
+ * @param param 云函数参数 { name, data}
+ * @param showLoading 是否显示 loading，默认为 true
+ * @param independent 是否为独立函数（非 functions 集合云函数）,默认为 false
+ */
 export const wxCloud = (
   param: RQ<ICloud.CallFunctionParam>,
-  showLoading: boolean = true
+  showLoading: boolean = true,
+  independent: boolean = false
 ): Promise<ApiResult> => {
   showLoading &&
     Taro.showLoading({
@@ -65,10 +72,22 @@ export const wxCloud = (
       mask: true
     })
   if (!param.data) {
-    param.data = { env: process.env.CLOUE_ENV }
+    param.data = independent
+      ? { env: process.env.CLOUE_ENV }
+      : { call: param.name, env: process.env.CLOUE_ENV, data: {} }
   } else {
-    param.data.env = process.env.CLOUE_ENV
+    param.data = independent
+      ? {
+          ...param.data,
+          env: process.env.CLOUE_ENV
+        }
+      : {
+          call: param.name,
+          env: process.env.CLOUE_ENV,
+          data: { ...param.data }
+        }
   }
+  !independent && (param.name = 'functions')
   return new Promise((resolve, reject) => {
     wx.cloud.callFunction({
       ...param,

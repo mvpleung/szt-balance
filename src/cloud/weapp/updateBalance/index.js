@@ -25,7 +25,7 @@ exports.main = async ({ env }, context) => {
           }
         }))
     })
+    return true
   }
-
-  return true
+  return false
 }

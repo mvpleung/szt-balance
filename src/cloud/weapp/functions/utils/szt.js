@@ -1,25 +1,16 @@
-const cloud = require('wx-server-sdk')
+/**
+ * 解析深圳通官网 JSP 页面获取余额信息
+ */
 
-let Utils = {
-  init() {
-    !this.axios &&
-      ((this.axios = require('axios')), (this.axios.defaults.timeout = 60000))
-    !this.cheerio && (this.cheerio = require('cheerio'))
-    !this.moment && (this.moment = require('moment'))
-    return {
-      axios: this.axios,
-      cheerio: this.cheerio,
-      moment: this.moment
-    }
-  }
-}
+const axios = require('axios')
+const cheerio = require('cheerio')
+const moment = require('moment')
 
 /**
- * 获取余额信息
- * @param cardNumber 卡号
+ * 获取深圳通余额
+ * @param cardNumber 深圳通卡号
  */
-exports.get = async cardNumber => {
-  let { axios, cheerio, moment } = Utils.init()
+exports.getSzt = async cardNumber => {
   let result
   try {
     result = await axios.get(
@@ -65,32 +56,5 @@ exports.get = async cardNumber => {
       code: 0,
       message: error.message || '查询失败，请重试'
     }
-  }
-}
-
-/**
- * 初始化数据库
- * @param env 环境
- * @param collection 集合名称
- */
-exports.initCloud = async (env, collection = 'szt-balance') => {
-  let db = cloud._$db
-  if (!db || !cloud.inited) {
-    cloud.init({
-      env
-    })
-    db = cloud.database()
-    try {
-      await db.createCollection(collection)
-    } catch (error) {}
-    cloud._$db = db
-  }
-  !db._$collection && (db._$collection = db.collection(collection))
-  const { OPENID, APPID } = cloud.getWXContext()
-  return {
-    db,
-    collection: db._$collection,
-    OPENID,
-    APPID
   }
 }
