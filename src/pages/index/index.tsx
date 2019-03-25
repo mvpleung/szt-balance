@@ -1,5 +1,5 @@
 import Taro, {
-  Component,
+  PureComponent,
   Config,
   ShareAppMessageObject,
   ShareAppMessageReturn
@@ -11,7 +11,7 @@ import { isEmpty, wxCloud } from '@/utils'
 import { QueryInfo } from '@/typings'
 import { BaseEventOrig } from '@tarojs/components/types/common'
 
-export default class Index extends Component {
+export default class Index extends PureComponent {
   /**
    * 指定config的类型声明为: Taro.Config
    *
@@ -102,7 +102,7 @@ export default class Index extends Component {
    * 输入框聚焦时触发
    * @param e 事件
    */
-  onInputfocus(_e: BaseEventOrig<any>): void {
+  onInputfocus(): void {
     this.setState({
       showHistory: this.state.history && this.state.history.length > 0,
       cardNumber: ''
@@ -113,7 +113,7 @@ export default class Index extends Component {
    * 输入框失去焦点时触发
    * @param e 事件
    */
-  onInputblur(_e: BaseEventOrig<any>): void {
+  onInputblur(): void {
     this.setState({
       showHistory: false
     })
@@ -146,24 +146,27 @@ export default class Index extends Component {
         data: {
           cardNumber
         }
-      }).then(resp => {
-        let cardInfo = resp.data
-        let { history } = this.state
-        history.push(cardInfo.cardNumber)
-        this.setState({
-          records: [cardInfo].concat(
-            this.state.records.filter(
-              record => record.cardNumber !== cardInfo.cardNumber
-            )
-          ),
-          history: [...new Set(history)],
-          cardNumber: ''
-        })
-        this.swiperCard &&
-          this.swiperCard.setState({
-            current: 0
-          })
       })
+        .then(resp => {
+          let cardInfo = resp.data
+          let { history } = this.state
+          history.push(cardInfo.cardNumber)
+          this.setState({
+            records: [cardInfo].concat(
+              this.state.records.filter(
+                record => record.cardNumber !== cardInfo.cardNumber
+              )
+            ),
+            history: [...new Set(history)],
+            cardNumber: ''
+          })
+          this.swiperCard &&
+            this.swiperCard.setState({
+              current: 0
+            })
+          this.onInputblur()
+        })
+        .catch(_error => this.onInputblur())
     } else {
       Taro.showToast({
         title: '请输入卡号',

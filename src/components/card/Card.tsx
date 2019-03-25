@@ -1,4 +1,4 @@
-import Taro, { Component } from '@tarojs/taro'
+import Taro, { PureComponent } from '@tarojs/taro'
 import PropTypes from 'prop-types'
 import { View, Text, Image } from '@tarojs/components'
 import './Card.scss'
@@ -6,7 +6,7 @@ import { CardInfo } from '@/typings'
 import { ITouchEvent } from '@tarojs/components/types/common'
 import { wxCloud } from '@/utils'
 
-export default class Index extends Component {
+export default class Index extends PureComponent {
   static defaultProps = {
     cardInfo: null,
     onDelete: null

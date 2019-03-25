@@ -1,4 +1,4 @@
-import { Component } from '@tarojs/taro'
+import { PureComponent } from '@tarojs/taro'
 import PropTypes from 'prop-types'
 import { Swiper, SwiperItem, View, Text } from '@tarojs/components'
 import Card from './Card'
@@ -6,7 +6,7 @@ import './SwiperCard.scss'
 import { CardInfo } from '@/typings'
 import { ITouchEvent } from '@tarojs/components/types/common'
 
-export default class Index extends Component {
+export default class Index extends PureComponent {
   constructor(props) {
     super(props)
     this.state = {
