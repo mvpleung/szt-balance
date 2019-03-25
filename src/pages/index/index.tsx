@@ -26,6 +26,8 @@ export default class Index extends Component {
 
   state: QueryInfo
 
+  swiperCard: SwiperCard | null
+
   constructor() {
     super()
     this.updateHistory()
@@ -147,7 +149,7 @@ export default class Index extends Component {
       }).then(resp => {
         let cardInfo = resp.data
         let { history } = this.state
-        history.push(resp.data.cardNumber)
+        history.push(cardInfo.cardNumber)
         this.setState({
           records: [cardInfo].concat(
             this.state.records.filter(
@@ -157,6 +159,10 @@ export default class Index extends Component {
           history: [...new Set(history)],
           cardNumber: ''
         })
+        this.swiperCard &&
+          this.swiperCard.setState({
+            current: 0
+          })
       })
     } else {
       Taro.showToast({
@@ -223,6 +229,9 @@ export default class Index extends Component {
           ))}
         </View>
         <SwiperCard
+          ref={child => {
+            this.swiperCard = child
+          }}
           records={this.state.records}
           styleObj={{
             marginTop: '60rpx',
