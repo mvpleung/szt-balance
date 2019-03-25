@@ -146,7 +146,7 @@ export default class Index extends Component {
         </View>
         <SwiperCard
           records={this.state.records}
-          // styleObj={{ marginTop: '60rpx' }}
+          styleObj={{ marginTop: '60rpx' }}
           onDelete={this.onCardDelete}
         />
         <View className='content-row-notice'>
