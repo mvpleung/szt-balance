@@ -29,6 +29,7 @@ export default class Index extends Component {
   constructor() {
     super()
     this.updateHistory()
+    this.getHistory()
   }
 
   componentWillMount() {}
@@ -69,6 +70,23 @@ export default class Index extends Component {
   }
 
   /**
+   * 查询历史
+   * @param e
+   */
+  getHistory(): void {
+    wxCloud(
+      {
+        name: 'queryHistory'
+      },
+      false
+    ).then(resp =>
+      this.setState({
+        history: resp.data
+      })
+    )
+  }
+
+  /**
    * 更新卡号
    * @param e 事件
    */
@@ -76,6 +94,43 @@ export default class Index extends Component {
     this.setState({
       cardNumber: e.detail.value
     })
+  }
+
+  /**
+   * 输入框聚焦时触发
+   * @param e 事件
+   */
+  onInputfocus(_e: BaseEventOrig<any>): void {
+    this.setState({
+      showHistory: this.state.history && this.state.history.length > 0,
+      cardNumber: ''
+    })
+  }
+
+  /**
+   * 输入框失去焦点时触发
+   * @param e 事件
+   */
+  onInputblur(_e: BaseEventOrig<any>): void {
+    this.setState({
+      showHistory: false
+    })
+  }
+
+  /**
+   * 历史搜索
+   */
+  historySearch(cardNumber: string): void {
+    if (!isEmpty(cardNumber)) {
+      this.setState(
+        {
+          cardNumber
+        },
+        () => {
+          this.search()
+        }
+      )
+    }
   }
 
   /**
@@ -91,12 +146,16 @@ export default class Index extends Component {
         }
       }).then(resp => {
         let cardInfo = resp.data
+        let { history } = this.state
+        history.push(resp.data.cardNumber)
         this.setState({
           records: [cardInfo].concat(
             this.state.records.filter(
               record => record.cardNumber !== cardInfo.cardNumber
             )
-          )
+          ),
+          history: [...new Set(history)],
+          cardNumber: ''
         })
       })
     } else {
@@ -135,6 +194,9 @@ export default class Index extends Component {
             onInput={this.inputChange}
             placeholder='输入深圳通卡号(括号前面的数字)'
             confirm-type='search'
+            max-length='12'
+            onFocus={this.onInputfocus}
+            onBlur={this.onInputblur}
           />
           <Icon
             className='icon'
@@ -144,9 +206,28 @@ export default class Index extends Component {
             onClick={this.search}
           />
         </View>
+        <View
+          className='history'
+          style={
+            this.state.showHistory ? 'display: inline-flex' : 'display: none'
+          }
+        >
+          {this.state.history.map(item => (
+            <Text
+              key={item}
+              className='history-item'
+              onClick={this.historySearch.bind(this, item)}
+            >
+              {item}
+            </Text>
+          ))}
+        </View>
         <SwiperCard
           records={this.state.records}
-          styleObj={{ marginTop: '60rpx' }}
+          styleObj={{
+            marginTop: '60rpx',
+            opacity: this.state.showHistory ? 0.7 : 1.0
+          }}
           onDelete={this.onCardDelete}
         />
         <View className='content-row-notice'>

@@ -45,6 +45,10 @@ declare namespace Szt {
      * 查询记录
      */
     records: Array<CardInfo>
+    /**
+     * 是否显示历史查询
+     */
+    showHistory: boolean
   }
 
   /**

@@ -3,8 +3,51 @@
  */
 const { getSzt } = require('../utils')
 
+/**
+ * 存入历史记录
+ * @param {string} cardNumber 深圳通卡号
+ * @param {string} openid 微信用户ID
+ * @param {string} appid  应用ID
+ */
+let saveHistory = async (db, cardNumber, openid, appid) => {
+  let _collection = db.collection('szt-history')
+  let { total } = await _collection
+    .where({
+      openid,
+      appid,
+      cardNumber
+    })
+    .count()
+  if (total > 0) {
+    await _collection
+      .where({
+        openid,
+        appid,
+        cardNumber
+      })
+      .update({
+        data: {
+          updateTime: db.serverDate()
+        }
+      })
+  } else {
+    await _collection.add({
+      data: {
+        openid,
+        appid,
+        cardNumber,
+        createTime: db.serverDate(),
+        updateTime: db.serverDate()
+      }
+    })
+  }
+}
+
 // 云函数入口函数
-exports.main = async ({ cardNumber, collection, OPENID, APPID }, context) => {
+exports.main = async (
+  { db, cardNumber, collection, OPENID, APPID },
+  context
+) => {
   if (!cardNumber) {
     return {
       code: 0,
@@ -27,6 +70,11 @@ exports.main = async ({ cardNumber, collection, OPENID, APPID }, context) => {
       cardNumber
     })
     .count()
+
+  //如果查询到就存入历史表
+  if (result.code === 1) {
+    await saveHistory(db, cardNumber, OPENID, APPID)
+  }
 
   //数据库没有数据，插入获取到的数据
   if (total <= 0) {
