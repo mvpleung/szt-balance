@@ -1,6 +1,6 @@
 import { Component } from '@tarojs/taro'
 import PropTypes from 'prop-types'
-import { Swiper, SwiperItem } from '@tarojs/components'
+import { Swiper, SwiperItem, View, Text } from '@tarojs/components'
 import Card from './Card'
 import './SwiperCard.scss'
 import { CardInfo } from '@/typings'
@@ -71,7 +71,7 @@ export default class Index extends Component {
 
   render() {
     const { records, styleObj } = this.props
-    return (
+    return records && records.length > 0 ? (
       <Swiper
         className='swiper-card-basic'
         indicatorColor='rgba(0, 0, 0, .3)'
@@ -88,6 +88,10 @@ export default class Index extends Component {
           </SwiperItem>
         ))}
       </Swiper>
+    ) : (
+      <View className='swiper-empty-notice'>
+        <Text>快来查询深圳通余额吧~</Text>
+      </View>
     )
   }
 }
