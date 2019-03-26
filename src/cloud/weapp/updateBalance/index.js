@@ -10,13 +10,15 @@ exports.main = async ({ env }, context) => {
 
   //数据存在数据时，自动调用
   if (list.length > 0) {
-    list.forEach(async item => {
+    //async await 的问题
+    //这里抛弃 forEach 的写法，原因是 forEach 里的操作将会是并发执行，所以改成 for 为 继发执行
+    for (let { _id, cardNumber } of list) {
       let {
         code,
         data: { cardBalance, cardValidity, currentTime, updateTime }
-      } = await get(item.cardNumber)
+      } = await get(cardNumber)
       code === 1 &&
-        (await collection.doc(item._id).update({
+        (await collection.doc(_id).update({
           data: {
             cardBalance,
             cardValidity,
@@ -24,7 +26,7 @@ exports.main = async ({ env }, context) => {
             updateTime
           }
         }))
-    })
+    }
     return true
   }
   return false

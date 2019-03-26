@@ -3,7 +3,7 @@ let test = require('./index')
 test
   .main(
     {
-      cardNumber: '684477097'
+      env: 'szt-balance-ac8d11'
     },
     null
   )

@@ -66,11 +66,15 @@ exports.initCloud = async (env, collection = 'szt-balance') => {
   if (!db || !cloud.inited) {
     cloud.init({
       env
+      // secretId: 'AKIDsLwIZe5h5QdfBZuxNjy82i5MX7UdCjuT',
+      // secretKey: 'SeP9X4M7D4fzwylIthMzSXM4ZFm44vUX'
     })
     db = cloud.database()
     try {
       await db.createCollection(collection)
-    } catch (error) {}
+    } catch (error) {
+      console.error(error)
+    }
     this._$db = db
   }
   ;(!this._$collection || this._$collName !== collection) &&
