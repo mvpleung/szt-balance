@@ -15,7 +15,7 @@ exports.main = async ({ env }, context) => {
     for (let { _id, cardNumber } of list) {
       let {
         code,
-        data: { cardBalance, cardValidity, currentTime, updateTime }
+        data: { cardBalance, cardValidity, currentTime, updateTime } = {}
       } = await get(cardNumber)
       code === 1 &&
         (await collection.doc(_id).update({
