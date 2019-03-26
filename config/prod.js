@@ -1,9 +1,9 @@
 module.exports = {
   env: {
-    NODE_ENV: '"production"'
+    NODE_ENV: '"production"',
+    CLOUE_ENV: 'szt-prod-994210'
   },
-  defineConstants: {
-  },
+  defineConstants: {},
   weapp: {},
   h5: {}
 }

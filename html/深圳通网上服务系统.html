@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0052)http://query.shenzhentong.com:8080/sztnet/qryCard.do -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=GBK">
+    <title>深圳通网上服务系统</title>
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+<style type="text/css">
+.tablelist {
+	background-color:"#93B3CA";
+	width:80%;
+	font-family: "Arial";
+	font-size: 9pt;
+	color: #000000;
+	text-decoration: none;
+	text-align: center;
+	vertical-align: middle;
+}
+.tablelist th{text-align: center;vertical-align: middle;background-color: #E0EEEE;}
+.tablelist td{overflow:hidden;white-space: nowrap;padding:2px;background-color: #FFFFFF;}
+
+.class1 td{background-color: #F8FCFC;}
+.class2 td{background-color: #FFFFFF;}
+.class3 td{background-color: #FFF5EC;}
+
+.listtr{background-color:"#E0EEEE";}	 
+
+.tableact{
+	background-color:"#93B3CA";
+	width:80%;
+	font-family: "Arial";
+	font-size: 9pt;
+	color: #000000;
+	text-decoration: none;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.td_wrong{color:red;}
+.bt{ 
+PADDING-TOP: 3px;
+PADDING-RIGHT: 3px;
+PADDING-LEFT: 1px;
+padding-bottom:3px;
+background:url(images/bt.gif);
+border:1px solid #7DE7FD;
+color:#000000;
+font-size:10px;
+font-family: "Arial";
+CURSOR: hand;
+height:22px;
+text-align:center;
+}
+.bt_on{ 
+PADDING-TOP: 3px;
+PADDING-RIGHT: 3px;
+PADDING-LEFT: 1px;
+padding-bottom:3px;
+background:url(images/button_bg2.gif);
+border:1px solid #c3a336;
+color:#000000;
+font-size:10px;
+font-family: "Arial";
+CURSOR: hand;
+height:22px;
+text-align:center;
+}
+</style>
+<script type="text/javascript">
+    if(window.top!=window.self)    
+    window.top.location.href="error.jsp"; 
+</script>
+
+<style type="text/css" abt="234"></style></head>
+
+
+
+<body style="">  
+
+<script language="javaScript">
+function subValid(){
+    if(document.form0.cardno.value.length!=9&&document.form0.cardno.value.length!=12){
+        alert("卡号必须是9位或12位！");
+        return false;
+    }
+    document.form0.submit();
+}
+//隔行变色 + 滑过变色  
+function sti_table(id,class1,class2,class3){
+    var para=document.getElementById(id);
+    if(!para)return false;
+    var tr=para.getElementsByTagName("tr");
+    var odd=false;
+    for(var i=1;i<tr.length;i++ ){
+        if(odd==true){
+            tr[i].className=class1;      
+	  	    odd=false;
+	  	    tr[i].onmouseover=function(){this.className = class3;}
+	     	tr[i].onmouseout=function(){this.className = class1;}
+	     }else{
+	  	    tr[i].className = class2;   
+            odd=true;
+	  	    tr[i].onmouseover=function(){this.className=class3;}
+	  	    tr[i].onmouseout=function(){this.className = class2;}
+	     }
+    }
+}   
+</script>
+    <div align="center"><b>深圳通网上查询</b></div>
+    <br><br>
+    <div align="center">
+    <form name="form0" action="http://query.shenzhentong.com:8080/sztnet/qryCard.do" method="post">
+    <table cellspacing="1" cellpadding="2" class="tablelist">
+      <tbody>
+        <tr>
+        <th bgcolor="#E0EEEE" style="text-align:left;"> 卡余额查询</th>
+        </tr>
+        <tr>
+        <td bgcolor="#F8F8FF" align="left">       
+          请输入卡号：<input type="text" name="cardno" size="20" maxlength="12" value="" onkeyup="this.value=this.value.replace(/[^0-9a-zA-Z]/g,&#39;&#39;);this.value=this.value.toUpperCase();" onafterpaste="this.value=this.value.replace(/[^0-9a-zA-Z]/g,&#39;&#39;);this.value=this.value.toUpperCase();">         
+         <input type="button" value="查 询" onclick="subValid()" onmouseover="this.className=&#39;bt_on&#39;" onmouseout="this.className=&#39;bt&#39;" class="bt">
+         <input type="button" value="返回首页" onclick="location.href=&#39;http://www.shenzhentong.com&#39;" onmouseover="this.className=&#39;bt_on&#39;" onmouseout="this.className=&#39;bt&#39;" class="bt">        
+        </td> 
+        </tr>
+      </tbody>
+    </table>
+    </form>
+    <table cellspacing="1" cellpadding="2" class="tableact"><tbody><tr><td bgcolor="#E4F2F3">卡号：</td><td bgcolor="#FFFFFF">684477097</td><td bgcolor="#E4F2F3" id="cardRealAmt" width="10%" nowrap="">卡内余额(截止到2019-03-13 12:21:47)：</td><td bgcolor="#FFFFFF" align="right">0.10元</td><td bgcolor="#E4F2F3" id="expDate" width="10%" nowrap="">卡有效截止日期：</td><td bgcolor="#FFFFFF" align="right">2046-05-02</td></tr></tbody></table><br>
+    
+    
+    
+
+  </div>
+  <br><br>
+  <div align="center">
+  <table cellspacing="1" cellpadding="2" class="tablelist">
+   <tbody><tr><td align="left" width="1100">
+     温馨提示：<br>
+	1.本服务查询结果仅供参考，如对查询结果有疑问请与深圳通公司客户服务部联系。<br>
+	2.持卡人可以通过地铁车站内设置的自助查询机查询最近10笔交易记录，也可以通过巴士车辆收费机查询最近一笔交易记录。<br>
+	3.免责声明：深圳通卡为不记名卡，持卡人应妥善保管并使用。深圳通公司对本便民查询服务不提供任何明示或默示的担保或保证，除司法、行政机关公务需要外，其他个人或机构不得将<br>
+	深圳通公司所提供数据作为证据或其他商业用途使用。持卡人未尽妥善保管义务而造成的各种损失，深圳通公司概不负责。任何使用本站提供的信息作为依据而对第三方造成的各类损失，<br>
+	均由信息使用方负责，深圳通公司不承担任何法律责任。<br>
+	4.本服务所提供数据的解释权归深圳通公司所有。<br>
+
+	   </td></tr>
+	  </tbody></table>
+  </div>
+  <script type="text/javascript">sti_table("txnDtlList" , "class1" , "class2" ,"class3" ); </script>
+  
+
+</body></html>
