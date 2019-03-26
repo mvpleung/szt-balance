@@ -1,4 +1,4 @@
-import Taro, { Component } from '@tarojs/taro'
+import Taro, { PureComponent } from '@tarojs/taro'
 import Index from './pages/index'
 
 import './app.scss'
@@ -10,7 +10,7 @@ import { WeAppConfig } from './typings'
 //   require('nerv-devtools')
 // }
 
-class App extends Component {
+class App extends PureComponent {
   /**
    * 指定config的类型声明为: Taro.Config
    *
@@ -30,7 +30,15 @@ class App extends Component {
       navigationBarTitleText: '首页',
       navigationBarTextStyle: 'black'
     },
-    cloud: true
+    cloud: true,
+    // plugins: {
+    //   tucao: {
+    //     version: '1.1.4',
+    //     provider: 'wx8abaf00ee8c3202e'
+    //   }
+    // }
+    //吐个槽小程序(https://tucao.qq.com)
+    navigateToMiniProgramAppIdList: ['wx8abaf00ee8c3202e']
     // tabBar: {
     //   list: [
     //     {
@@ -63,12 +71,12 @@ class App extends Component {
   }
 
   componentDidMount() {
-    wx.cloud.init({
+    Taro.cloud.init({
       env: process.env.CLOUE_ENV,
       traceUser: true
     })
 
-    const updateManager = wx.getUpdateManager()
+    const updateManager = Taro.getUpdateManager()
     updateManager.onUpdateReady(() => {
       Taro.showModal({
         title: '更新提示',

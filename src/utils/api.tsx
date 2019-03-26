@@ -87,7 +87,7 @@ export const wxCloud = (
   }
   !independent && (param.name = 'functions')
   return new Promise((resolve, reject) => {
-    wx.cloud.callFunction({
+    Taro.cloud.callFunction({
       ...param,
       ...callback(resolve, reject)
     })

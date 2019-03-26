@@ -49,14 +49,25 @@
     width: calc(100%-60px);
     padding: 5px 100px;
     color: white;
-    font-size: 60%;
-    display: inline-flex;
-    justify-content: space-between;
+    font-size: 70%;
+    // display: inline-flex;
+    display: flex;
+    flex-direction: column;
+    // justify-content: center;
+    align-items: center;
     position: absolute;
-    left: 0px;
-    bottom: 5%;
+    // left: 0px;
+    bottom: 3%;
     .noticeTxt {
       color: #9e9e9e;
+    }
+    .link {
+      color: #1e94ff;
+      width: 150px;
+      height: 60px;
+      display: block;
+      line-height: 50rpx;
+      text-decoration-line: underline;
     }
   }
 }

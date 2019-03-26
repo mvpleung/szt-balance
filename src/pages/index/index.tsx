@@ -11,6 +11,9 @@ import { isEmpty, wxCloud } from '@/utils'
 import { QueryInfo } from '@/typings'
 import { BaseEventOrig } from '@tarojs/components/types/common'
 
+//吐个槽反馈插件（https://tucao.qq.com/dashboard/statistic/dataOverview）
+// const Tucao = requirePlugin('tucao').default
+
 export default class Index extends PureComponent {
   /**
    * 指定config的类型声明为: Taro.Config
@@ -193,6 +196,24 @@ export default class Index extends PureComponent {
     })
   }
 
+  /**
+   * 跳转反馈
+   */
+  feedback(e: BaseEventOrig<any>): void {
+    e.stopPropagation()
+    // Taro.navigateTo({
+    //   url: Tucao.getUrl({
+    //     productId: '57294'
+    //   })
+    // })
+    Taro.navigateToMiniProgram({
+      appId: 'wx8abaf00ee8c3202e',
+      extraData: {
+        id: '57294'
+      }
+    })
+  }
+
   render() {
     return (
       <View className='index'>
@@ -244,7 +265,10 @@ export default class Index extends PureComponent {
         />
         <View className='content-row-notice'>
           <Text className='noticeTxt'>
-            注：本查询结果均来自于官方最近更新的数据，偶有查询失败，请尝试再次查询
+            注：本查询结果均来自于官方最近更新的数据，偶有查询失败，请尝试再次查询。
+          </Text>
+          <Text className='link' onClick={this.feedback}>
+            我要吐槽
           </Text>
         </View>
       </View>
