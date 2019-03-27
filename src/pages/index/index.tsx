@@ -69,6 +69,10 @@ export default class Index extends PureComponent {
         this.setState({
           records: resp.data
         })
+        this.swiperCard &&
+            this.swiperCard.setState({
+              current: 0
+            })
         complete && complete()
       })
       .catch(error => complete && complete(error))
