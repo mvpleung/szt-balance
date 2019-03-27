@@ -6,6 +6,10 @@ import { CardInfo } from '@/typings'
 import { ITouchEvent } from '@tarojs/components/types/common'
 import { wxCloud } from '@/utils'
 
+//引入图片
+import LogoSmall from '@/assets/logo_small.png'
+import More from '@/assets/more.png'
+
 export default class Index extends PureComponent {
   static defaultProps = {
     cardInfo: null,
@@ -80,9 +84,9 @@ export default class Index extends PureComponent {
       <View className='content-info'>
         <View className='content-datas'>
           <View className='content-row'>
-            <Image mode='aspectFit' src={require('@/static/logo_small.png')} />
+            <Image mode='aspectFit' src={LogoSmall} />
             <Image
-              src={require('@/static/more.png')}
+              src={More}
               onClick={this.showMore.bind(this, cardNumber)}
             />
           </View>

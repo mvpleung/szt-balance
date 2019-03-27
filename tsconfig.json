@@ -23,7 +23,7 @@
     "paths": {
       "@/components/*": ["./src/components/*"],
       "@/utils": ["./src/utils/index"],
-      "@/static/*": ["./src/static/*"],
+      "@/assets/*": ["./src/assets/*"],
       "@/typings": ["./src/typings/index"],
       "@/pages/*": ["./src/pages/*"]
     }

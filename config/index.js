@@ -10,7 +10,8 @@ const config = {
     '828': 1.81 / 2
   },
   sourceRoot: 'src',
-  outputRoot: 'dist',
+  // outputRoot: 'dist',
+  outputRoot: `dist/${process.env.CLIENT_ENV}`,
   plugins: {
     babel: {
       sourceMap: true,
@@ -88,7 +89,7 @@ const config = {
     '@/components': path.resolve(__dirname, '..', 'src/components'),
     '@/utils': path.resolve(__dirname, '..', 'src/utils'),
     '@/typings': path.resolve(__dirname, '..', 'src/typings'),
-    '@/static': path.resolve(__dirname, '..', 'src/static'),
+    '@/assets': path.resolve(__dirname, '..', 'src/assets'),
     '@/typings': path.resolve(__dirname, '..', 'src/typings'),
     '@/pages': path.resolve(__dirname, '..', 'src/pages')
   }
