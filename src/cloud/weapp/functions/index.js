@@ -13,7 +13,10 @@ exports.main = async ({ call, env, data }, context) => {
         message: `云函数[${call}]不存在`
       }
     }
-    return functions[call]({ ...(await initCloud(env)), ...data }, context)
+    return await functions[call](
+      { ...(await initCloud(env)), ...data },
+      context
+    )
   } catch (error) {
     return {
       code: 0,
