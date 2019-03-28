@@ -33,11 +33,12 @@ export default class Index extends PureComponent {
 
   constructor() {
     super()
+  }
+
+  componentWillMount() {
     this.updateHistory()
     this.getHistory()
   }
-
-  componentWillMount() {}
 
   componentDidMount() {}
 
@@ -70,9 +71,9 @@ export default class Index extends PureComponent {
           records: resp.data
         })
         this.swiperCard &&
-            this.swiperCard.setState({
-              current: 0
-            })
+          this.swiperCard.setState({
+            current: 0
+          })
         complete && complete()
       })
       .catch(error => complete && complete(error))
