@@ -16,12 +16,7 @@ exports.main = async ({ db, OPENID, APPID }, context) => {
   // }
   try {
     await db.createCollection('szt-history')
-  } catch (error) {
-    return {
-      code: 0,
-      message: '数据库集合创建失败，请重试'
-    }
-  }
+  } catch (error) {}
   let history = await db
     .collection('szt-history')
     .where({
