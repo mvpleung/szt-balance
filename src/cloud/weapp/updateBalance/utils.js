@@ -72,9 +72,7 @@ exports.initCloud = async (env, collection = 'szt-balance') => {
     db = cloud.database()
     try {
       await db.createCollection(collection)
-    } catch (error) {
-      console.error(error)
-    }
+    } catch (error) {}
     this._$db = db
   }
   ;(!this._$collection || this._$collName !== collection) &&
