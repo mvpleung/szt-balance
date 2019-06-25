@@ -11,7 +11,7 @@ const config = {
   },
   sourceRoot: 'src',
   // outputRoot: 'dist',
-  outputRoot: `dist/${process.env.CLIENT_ENV}`,
+  outputRoot: `dist/${process.env.TARO_ENV}`,
   plugins: {
     babel: {
       sourceMap: true,

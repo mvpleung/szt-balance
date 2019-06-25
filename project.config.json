@@ -1,5 +1,5 @@
 {
-	"miniprogramRoot": "dist/weapp",
+	"miniprogramRoot": "dist/weapp/",
 	"projectname": "szt-balance",
 	"description": "深圳通交通卡余额查询",
 	"appid": "wx08a0c9df0fbb2d79",
@@ -13,6 +13,9 @@
 	},
 	"compileType": "miniprogram",
 	"cloudfunctionRoot": "src/cloud/weapp/",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"cloudfunctionTemplateRoot": "cloudfunctionTemplate",
 	"condition": {
 		"search": {
 			"current": -1,
