@@ -50,7 +50,7 @@ export default class Index extends PureComponent {
    * 监听 Swiper 滑动
    * @param e 滑动事件
    */
-  onSwiperChange(e: ITouchEvent): void {
+  onSwiperChange = (e: ITouchEvent): void => {
     this.setState({
       current: e.detail.current
     })
@@ -60,7 +60,7 @@ export default class Index extends PureComponent {
    * 监听 SwiperItem 删除事件
    * @param cardNumber 卡号
    */
-  onSwiperItemDelete(cardNumber: string): void {
+  onSwiperItemDelete = (cardNumber: string): void => {
     const { records, onDelete } = this.props
     let length = records.length
     this.setState({

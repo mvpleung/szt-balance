@@ -14,9 +14,6 @@ exports.main = async ({ db, OPENID, APPID }, context) => {
   //   code: 1,
   //   data: [...new Set(history.data.map(item => item.cardNumber))]
   // }
-  try {
-    await db.createCollection('szt-history')
-  } catch (error) {}
   let history = await db
     .collection('szt-history')
     .where({

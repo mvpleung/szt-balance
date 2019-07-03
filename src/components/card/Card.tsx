@@ -40,7 +40,7 @@ export default class Index extends PureComponent {
    * 展示更多菜单
    * @param e
    */
-  showMore(cardNumber: string, _e: ITouchEvent): void {
+  showMore = (cardNumber: string) => (_e: ITouchEvent): void => {
     Taro.showActionSheet({
       itemList: ['删除卡片']
     })
@@ -85,10 +85,7 @@ export default class Index extends PureComponent {
         <View className='content-datas'>
           <View className='content-row'>
             <Image mode='aspectFit' src={LogoSmall} />
-            <Image
-              src={More}
-              onClick={this.showMore.bind(this, cardNumber)}
-            />
+            <Image src={More} onClick={this.showMore(cardNumber)} />
           </View>
           <View className='content-row'>
             <Text className={cardBalance <= 1 ? 'content-red' : ''}>

@@ -1,5 +1,5 @@
 // 云函数统一入口，此处用于函数分发
-const { initCloud } = require('./utils/index')
+const { Cloud } = require('./utils/index')
 
 let functions = {}
 
@@ -13,10 +13,8 @@ exports.main = async ({ call, env, data }, context) => {
         message: `云函数[${call}]不存在`
       }
     }
-    return await functions[call](
-      { ...(await initCloud(env)), ...data },
-      context
-    )
+    const cloud = Cloud.init(env)
+    return await functions[call]({ ...cloud, ...data }, context)
   } catch (error) {
     return {
       code: 0,

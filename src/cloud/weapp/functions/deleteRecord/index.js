@@ -3,7 +3,7 @@
  */
 
 // 云函数入口函数
-exports.main = async ({ cardNumber, collection, OPENID, APPID }, context) => {
+exports.main = async ({ cardNumber, db, OPENID, APPID }, context) => {
   if (!cardNumber) {
     return {
       code: 0,
@@ -13,7 +13,8 @@ exports.main = async ({ cardNumber, collection, OPENID, APPID }, context) => {
 
   let {
     stats: { removed }
-  } = await collection
+  } = await db
+    .collection('szt-balance')
     .where({
       openid: OPENID,
       appid: APPID,

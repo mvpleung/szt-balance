@@ -100,7 +100,7 @@ export default class Index extends PureComponent {
    * 更新卡号
    * @param e 事件
    */
-  inputChange(e: BaseEventOrig<any>): void {
+  inputChange = (e: BaseEventOrig<any>): void => {
     this.setState({
       cardNumber: e.detail.value
     })
@@ -110,7 +110,7 @@ export default class Index extends PureComponent {
    * 输入框聚焦时触发
    * @param e 事件
    */
-  onInputfocus(): void {
+  onInputfocus = (): void => {
     this.setState({
       showHistory: this.state.history && this.state.history.length > 0,
       cardNumber: ''
@@ -121,7 +121,7 @@ export default class Index extends PureComponent {
    * 输入框失去焦点时触发
    * @param e 事件
    */
-  onInputblur(): void {
+  onInputblur = (): void => {
     this.setState({
       showHistory: false
     })
@@ -130,7 +130,7 @@ export default class Index extends PureComponent {
   /**
    * 历史搜索
    */
-  historySearch(cardNumber: string): void {
+  historySearch = (cardNumber: string) => (_e: BaseEventOrig<any>): void => {
     if (!isEmpty(cardNumber)) {
       this.setState(
         {
@@ -146,7 +146,7 @@ export default class Index extends PureComponent {
   /**
    * 查询卡号信息
    */
-  search(): void {
+  search = (): void => {
     let { cardNumber } = this.state
     if (!isEmpty(cardNumber)) {
       wxCloud({
@@ -194,7 +194,7 @@ export default class Index extends PureComponent {
    * 卡片删除成功回调
    * @param cardNumber 卡号
    */
-  onCardDelete(cardNumber: string): void {
+  onCardDelete = (cardNumber: string): void => {
     let records = this.state.records
     this.setState({
       records: records.filter(record => record.cardNumber != cardNumber)
@@ -247,15 +247,16 @@ export default class Index extends PureComponent {
             this.state.showHistory ? 'display: inline-flex' : 'display: none'
           }
         >
-          {this.state.history.map(item => (
-            <Text
-              key={item}
-              className='history-item'
-              onClick={this.historySearch.bind(this, item)}
-            >
-              {item}
-            </Text>
-          ))}
+          {this.state.history &&
+            this.state.history.map(item => (
+              <Text
+                key={item}
+                className='history-item'
+                onClick={this.historySearch(item)}
+              >
+                {item}
+              </Text>
+            ))}
         </View>
         <SwiperCard
           ref={child => {

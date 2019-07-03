@@ -10,7 +10,7 @@ const { getSzt } = require('../utils')
  * @param {string} appid  应用ID
  */
 let saveHistory = async (db, cardNumber, openid, appid) => {
-  let _collection = db.collection('szt-history')
+  const _collection = db.collection('szt-history')
   let { total } = await _collection
     .where({
       openid,
@@ -44,10 +44,7 @@ let saveHistory = async (db, cardNumber, openid, appid) => {
 }
 
 // 云函数入口函数
-exports.main = async (
-  { db, cardNumber, collection, OPENID, APPID },
-  context
-) => {
+exports.main = async ({ db, cardNumber, OPENID, APPID }, context) => {
   if (!cardNumber) {
     return {
       code: 0,
@@ -62,6 +59,7 @@ exports.main = async (
   }
 
   let result = await getSzt(cardNumber)
+  const collection = db.collection('szt-balance')
 
   let { total } = await collection
     .where({
