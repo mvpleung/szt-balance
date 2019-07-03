@@ -34,7 +34,7 @@ exports.Cloud = {
    * 初始化云环境
    * @param {String} env 执行环境ID
    */
-  init(env = 'default') {
+  init(env) {
     let self = this,
       db = dbMap.get(self)
     if (!db || (db && db.cloud && !db.cloud.inited)) {
